@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
 
-    TextToSpeech tts;
-    int result;
+   private TextToSpeech tts = null;
     private Button button;
 
     @Override
@@ -24,7 +24,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             public void onInit(int status) {
                 //初始化成功的话，设置语音，这里将它设置为中文
                 if (status == TextToSpeech.SUCCESS){
-                    tts.setLanguage(Locale.CHINA);
+                   int supported = tts.setLanguage(Locale.US);
+                    if ((supported != TextToSpeech.LANG_AVAILABLE)&&(supported != TextToSpeech.LANG_COUNTRY_AVAILABLE)){
+                        Toast.makeText(MainActivity.this,"不支持当前语言",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -40,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
      * 播报语音
      */
     public void broadcast(){
-        tts.speak("请好好开车，勿当老司机",TextToSpeech.QUEUE_ADD,null);
-        Log.e("111",result+"");
+        tts.setLanguage(Locale.CHINA);
+        tts.speak("请好好开车，勿当老司机",TextToSpeech.QUEUE_FLUSH,null);
     }
 
     /**
