@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
      */
     public void broadcast(){
         tts.setLanguage(Locale.CHINA);
-        tts.speak("请好好开车，勿当老司机",TextToSpeech.QUEUE_FLUSH,null);
+        tts.speak("请好好开车，勿当老司机",TextToSpeech.QUEUE_ADD,null);//可以用QUEUE_FLUSH
     }
 
     /**
